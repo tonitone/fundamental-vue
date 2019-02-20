@@ -36,23 +36,23 @@ function parseProp(): Promise<any> {
 let propToJson = null;
 async function parseIsDone() {
   propToJson = await parseProp();
-  // tslint:disable-next-line:no-console
-  console.log(propToJson);
   const i18n = new VueI18n({
-    locale: 'en',
+    locale: navigator.language || 'en',
     messages: {
-      en: {
-        message: Object.assign({}, {hello: 'hello world'}, propToJson),
+      'en': {
+        message: Object.assign({},
+          {
+            hello: 'hello world',
+            MRI_PA_TITLE: 'Patient Analytics',
+            MRI_PA_FURTHER_SELECTIONS: '... and {0} other selections',
+          },
+          propToJson),
       },
-        //   hello: 'hello world',
-        //   MRI_PA_TITLE: 'Patient Analytics',
-        //   MRI_PA_FURTHER_SELECTIONS: '... and {0} other selections',
-        // },
-      ch: {
+      'zh-CN': {
         message: {
           hello: '你好',
-          MRI_PA_TITLE: '的的的',
-          MRI_PA_FURTHER_SELECTIONS: '... 的的的 {0} 的的的',
+          MRI_PA_TITLE: '病人分析',
+          MRI_PA_FURTHER_SELECTIONS: '... 和 {0} 其他选择',
         },
       },
     },
@@ -68,43 +68,3 @@ async function parseIsDone() {
 }
 
 parseIsDone();
-
-// fetch('https://raw.githubusercontent.com/ryanpcmcquen/propertiesToJSON/master/sample.properties')
-// .then((response) => response.text())
-// .then((text) => {
-//     const propsText = propertiesToJSON(text);
-//     // tslint:disable-next-line:no-console
-//     console.log(propsText);
-//     return propsText;
-// });
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-// registerComponents(Vue);
-
-// const i18n = new VueI18n({
-//   locale: 'en',
-//   messages: {
-//     en: {
-//       message: Object.assign({}, {hello: 'hello world'}, propToJson),
-//     },
-//       //   hello: 'hello world',
-//       //   MRI_PA_TITLE: 'Patient Analytics',
-//       //   MRI_PA_FURTHER_SELECTIONS: '... and {0} other selections',
-//       // },
-//     ch: {
-//       message: {
-//         hello: '你好',
-//         MRI_PA_TITLE: '的的的',
-//         MRI_PA_FURTHER_SELECTIONS: '... 的的的 {0} 的的的',
-//       },
-//     },
-//   },
-// });
-
-// const vm = new Vue({
-//   components: { App },
-//   router: DocsRouter,
-//   render: h => h(App),
-//   i18n,
-// });
-// vm.$mount('#app');
