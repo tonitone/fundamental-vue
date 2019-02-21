@@ -34,6 +34,8 @@
     "license": "Apache-2.0",
     "main": "dist/FundamentalVue.umd.js",
     "dependencies": {
+        "enhanced-properties-loader": "^1.4.0",
+        "json-loader": "^0.5.7",
         "vue-class-component": "^6.3.2",
         "vue-property-decorator": "^7.3.0"
     },

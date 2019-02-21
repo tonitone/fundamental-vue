@@ -68,6 +68,13 @@ module.exports = {
           resourceQuery: /blockType=fullscreen-only/,
           use: 'block-loader?optionName=__fullscreenOnly',
         },
+        {
+          test: /\.properties$/,
+          use: [
+            { loader: 'json-loader' },
+            { loader: 'enhanced-properties-loader' }
+          ]
+        },
       ],
     },
   },
