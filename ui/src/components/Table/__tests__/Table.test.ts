@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
 import { assert } from "chai";
 import { createLocalVue, mount } from "@vue/test-utils";
 import {
@@ -8,6 +9,12 @@ import {
 } from "./../Components";
 import RowSelectionIndicator from "./../Components/RowSelectionIndicator.vue";
 import Table from "./../Table.vue";
+=======
+import { createLocalVue, mount } from '@vue/test-utils';
+import { TableRow, TableCell, TableHeader, TableHeaderCell } from './../Components';
+import RowSelectionIndicator from './../Components/RowSelectionIndicator.vue';
+import Table from './../Table.vue';
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
 
 describe("Table", () => {
   describe("TableCell", () => {
@@ -38,11 +45,19 @@ describe("Table", () => {
       const wrapper = mount(ClassAttrWrapper, { localVue });
       await localVue.nextTick();
 
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
       const cells = wrapper.findAll("td").wrappers;
       assert.isNotEmpty(cells);
       for (const cell of cells) {
         const classAttr = cell.attributes("class");
         assert(classAttr == null || classAttr !== "");
+=======
+      const cells = wrapper.findAll('td').wrappers;
+      expect(cells.length).toBeGreaterThan(0);
+      for (const cell of cells) {
+        const classAttr = cell.attributes('class');
+        expect(classAttr == null || classAttr !== '').toBe(true);
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
       }
     });
   });
@@ -79,7 +94,7 @@ describe("Table", () => {
     await localVue.nextTick();
 
     const headerCells = wrapper.findAll(TableHeaderCell);
-    assert.lengthOf(headerCells, 2);
+    expect(headerCells).toHaveLength(2);
 
     // Now we change the columns
     wrapper.setData({
@@ -92,7 +107,7 @@ describe("Table", () => {
       ]
     });
     await localVue.nextTick();
-    assert.lengthOf(wrapper.findAll(TableHeaderCell), 4);
+    expect(wrapper.findAll(TableHeaderCell)).toHaveLength(4);
   }),
     it("injects item id into table rows", async () => {
       const localVue = createLocalVue();
@@ -123,11 +138,19 @@ describe("Table", () => {
 
       const rows = wrapper.findAll(TableRow);
       const ids = rows.wrappers.map(row => (row.vm as any).itemId);
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
       assert.sameMembers(
         ids,
         ["1", "2", "3", "4"],
         `TableRows should have itemIds... html: ${wrapper.html()}`
       );
+=======
+      expect(ids).toContain('1');
+      expect(ids).toContain('2');
+      expect(ids).toContain('3');
+      expect(ids).toContain('4');
+      expect(ids).toHaveLength(4);
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
     });
 
   it("correctly disables checkboxes when switching from multiple selection to single selection with multiple rows selected", async () => {
@@ -176,6 +199,7 @@ describe("Table", () => {
     await localVue.nextTick();
     const selectedRows = wrapper.findAll('tr[aria-selected="true"]');
 
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
     assert.lengthOf(selectedRows, 2, "expected selected tr-elements");
     const checkboxes = wrapper.findAll(RowSelectionIndicator);
     const checkedCheckboxes = checkboxes.wrappers.filter(
@@ -196,6 +220,27 @@ describe("Table", () => {
       checkbox => (checkbox.vm as any).selected === true
     );
     assert.lengthOf(checkedCheckboxesAfterChange, 1);
+=======
+    expect(selectedRows).toHaveLength(2);
+    const checkboxes = wrapper.findAll(RowSelectionIndicator);
+    const checkedCheckboxes = checkboxes.wrappers.filter(checkbox => (checkbox.vm as any).selected === true);
+    expect(checkedCheckboxes).toHaveLength(2);
+
+    const selectedIdsEvents = wrapper.find(Table).emitted('update:selectedIds');
+    expect(selectedIdsEvents.length).toBeGreaterThan(0);
+
+    const selectedIds = selectedIdsEvents[selectedIdsEvents.length - 1][0];
+
+    expect(selectedIds).toHaveLength(2);
+    expect(selectedIds).toContain('1');
+    expect(selectedIds).toContain('2');
+
+    wrapper.setData({ selectionMode: 'single' });
+    wrapper.find(Table).setData({ selectionMode: 'single' });
+    await localVue.nextTick();
+    const checkedCheckboxesAfterChange = checkboxes.wrappers.filter(checkbox => (checkbox.vm as any).selected === true);
+    expect(checkedCheckboxesAfterChange).toHaveLength(1);
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
   });
 
   it("correctly checks checkboxes when selecting rows", async () => {
@@ -238,14 +283,21 @@ describe("Table", () => {
     rows.at(1).trigger("click");
     await localVue.nextTick();
     const selectedRows = wrapper.findAll('tr[aria-selected="true"]');
-    assert.lengthOf(selectedRows, 2);
+    expect(selectedRows).toHaveLength(2);
     const checkboxes = wrapper.findAll(RowSelectionIndicator);
     const isChecked = (indicator: any) => indicator.element.checked === true;
     const checkedCheckboxes = checkboxes.wrappers.filter(isChecked);
-    assert.lengthOf(checkedCheckboxes, 2);
+    expect(checkedCheckboxes).toHaveLength(2);
+
     const selectedIds = wrapper.vm.selectedIds;
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
     assert.lengthOf(selectedIds, 2);
     assert.sameMembers(selectedIds, ["1", "2"]);
+=======
+    expect(selectedIds).toHaveLength(2);
+    expect(selectedIds).toContain('1');
+    expect(selectedIds).toContain('2');
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
   });
 
   it("ensures single selection", async () => {
@@ -284,9 +336,15 @@ describe("Table", () => {
     const selectedRows = () => {
       return wrapper.findAll('tr[aria-selected="true"]');
     };
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
     assert.lengthOf(selectedRows(), 1);
     rows.at(1).trigger("click");
     assert.lengthOf(selectedRows(), 1);
+=======
+    expect(selectedRows()).toHaveLength(1);
+    rows.at(1).trigger('click');
+    expect(selectedRows()).toHaveLength(1);
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
   });
 
   it("can select multiple rows", async () => {
@@ -325,7 +383,7 @@ describe("Table", () => {
     const selectedRows = () => {
       return wrapper.findAll('tr[aria-selected="true"]');
     };
-    assert.lengthOf(selectedRows(), 2);
+    expect(selectedRows()).toHaveLength(2);
   });
 
   it("renders rows and columns when given data", async () => {
@@ -355,10 +413,17 @@ describe("Table", () => {
       { localVue }
     );
     await localVue.nextTick();
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
     const rows = wrapper.findAll("tbody tr");
     const cols = wrapper.findAll("tbody td");
     assert.lengthOf(rows, data.length);
     assert.lengthOf(cols, 3 * data.length);
+=======
+    const rows = wrapper.findAll('tbody tr');
+    const cols = wrapper.findAll('tbody td');
+    expect(rows).toHaveLength(data.length);
+    expect(cols).toHaveLength(3 * data.length);
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
   });
 
   it("renders no rows when data is empty", async () => {
@@ -382,9 +447,16 @@ describe("Table", () => {
       { localVue }
     );
     await localVue.nextTick();
+<<<<<<< Updated upstream:ui/src/components/Table/__tests__/Table.test.ts
     const rows = wrapper.findAll("tbody tr");
     const cols = wrapper.findAll("tbody td");
     assert.lengthOf(cols, 0);
     assert.lengthOf(rows, 0);
+=======
+    const rows = wrapper.findAll('tbody tr');
+    const cols = wrapper.findAll('tbody td');
+    expect(cols).toHaveLength(0);
+    expect(rows).toHaveLength(0);
+>>>>>>> Stashed changes:src/components/Table/__tests__/Table.test.ts
   });
 });

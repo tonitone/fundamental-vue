@@ -14,8 +14,7 @@
     "types": [
       "vue",
       "webpack-env",
-      "mocha",
-      "chai"
+      "jest"
     ],
     "paths": {
       "@/*": [

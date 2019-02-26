@@ -1,5 +1,6 @@
 {
   "name": "fundamental-vue",
+<<<<<<< Updated upstream
   "version": "0.0.15-rc.2",
   "scripts": {
     "bootstrap": "yarn install && yarn --cwd build install && yarn --cwd ui install && yarn --cwd docs install && yarn --cwd server install",
@@ -17,6 +18,50 @@
     "deploy:docs": "cp now.json dist && now --public --local-config=./now.json deploy ./dist"
   },
   "description": "SAP Fiori Fundamentals, implemented in Vue.js",
+=======
+  "version": "0.0.10-beta",
+  "private": false,
+  "description": "SAP Fiori Fundamentals, implemented in Vue.JS",
+  "author": "SAP SE",
+  "scripts": {
+    "serve": "vue-cli-service serve src/docs/main.ts",
+    "build": "vue-cli-service build --mode production --target lib --report --name FundamentalVue src/index.ts",
+    "test": "vue-cli-service test:unit 'src/**/__tests__/*.test.{ts,js,vue}'",
+    "lint": "npx tslint --project tsconfig.json --config tslint.json",
+    "deploy": "node ./node_modules/vue-gh-pages/index.js",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:vue": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "test:watch": "npm test -- --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/highlight.js": "^9.12.3",
+    "@types/jest": "^23.1.4",
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-typescript": "^3.4.0",
+    "@vue/cli-plugin-unit-jest": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "highlight.js": "^9.14.2",
+    "html-loader": "^1.0.0-alpha.0",
+    "markdown-loader": "^5.0.0",
+    "node-sass": "^4.11.0",
+    "raw-loader": "^1.0.0",
+    "sass-loader": "^7.1.0",
+    "ts-jest": "^23.0.0",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3",
+    "vue": "^2.6.4",
+    "vue-gh-pages": "^1.19.0",
+    "vue-template-compiler": "^2.6.4"
+  },
+  "bugs": {
+    "url": "https://github.com/SAP/fundamental-vue/issues"
+  },
+  "homepage": "https://github.com/SAP/fundamental-vue",
+>>>>>>> Stashed changes
   "keywords": [
     "vue",
     "sap",
@@ -24,6 +69,7 @@
     "typescript",
     "javascript"
   ],
+<<<<<<< Updated upstream
   "bugs": {
     "url": "https://github.com/SAP/fundamental-vue/issues"
   },
@@ -43,4 +89,15 @@
     "vue": "^2.6.6"
   },
   "main": "dist/FundamentalVue.umd.js"
+=======
+  "license": "Apache-2.0",
+  "main": "dist/FundamentalVue.umd.js",
+  "peerDependencies": {
+    "vue": "^2.6.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:SAP/fundamental-vue.git"
+  }
+>>>>>>> Stashed changes
 }
