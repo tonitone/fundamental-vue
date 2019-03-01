@@ -1,6 +1,6 @@
 <template>
   <div ref="content" style="display: none">
-    <slot/>
+    <slot />
   </div>
 </template>
 
@@ -11,26 +11,56 @@ import { PropValidator } from "vue/types/options";
 import { Vue as VueInstance } from "vue/types/vue";
 import { VueClass } from "@/mixins/typesafeMixins";
 
+const boundaryMapping = {
+  scrollParent: "scrollParent",
+  viewport: "viewport",
+  window: "window"
+};
+
+const triggerMapping = {
+  hover: "hover",
+  click: "click",
+  focus: "focus"
+};
+
+const placementMapping = {
+  "auto-start": "auto-start",
+  auto: "auto",
+  "auto-end": "auto-end",
+  "top-start": "top-start",
+  top: "top",
+  "top-end": "top-end",
+  "right-start": "right-start",
+  right: "right",
+  "right-end": "right-end",
+  "bottom-end": "bottom-end",
+  bottom: "bottom",
+  "bottom-start": "bottom-start",
+  "left-end": "left-end",
+  left: "left",
+  "left-start": "left-start"
+};
+
 type TargetFn = () => string | VueInstance | Element;
 
+type Boundary = keyof typeof boundaryMapping;
 const BoundaryIsValid = (value: any) =>
   typeof value === "string"
-    ? ["scrollParent", "window", "viewport"].includes(value)
+    ? Object.keys(boundaryMapping).includes(value)
     : true;
 
+type Trigger = keyof typeof triggerMapping;
 const TriggersIsValid = (value: string) =>
   value
     .trim()
     .split(/\s+/)
     .reduce((valid: boolean, t: string) => {
-      return valid && ["hover", "click", "focus"].includes(t);
+      return valid && Object.keys(triggerMapping).includes(t);
     }, true);
 
+type Placement = keyof typeof placementMapping;
 const PlacementIsValid = (value: string) => {
-  const placements: Array<string> = ["auto", "top", "right", "bottom", "left"];
-  return placements
-    .flatMap((p: string) => [p, `${p}-start`, `${p}-end`]) // The variations
-    .includes(value);
+  return Object.keys(placementMapping).includes(value);
 };
 
 export default mixins(Uid).extend({
@@ -44,7 +74,7 @@ export default mixins(Uid).extend({
       type: String,
       default: "bottom",
       validator: PlacementIsValid
-    } as PropValidator<string>,
+    } as PropValidator<Placement>,
     triggers: {
       type: String,
       default: "click",
@@ -58,7 +88,7 @@ export default mixins(Uid).extend({
       type: [String, Element],
       default: "scrollParent",
       validator: BoundaryIsValid
-    } as PropValidator<string | Element>,
+    } as PropValidator<Boundary | Element>,
     arrowElement: {
       type: [String, Element]
     } as PropValidator<string | Element>,
@@ -319,25 +349,21 @@ export default mixins(Uid).extend({
       return this.popperEl;
     },
     getPopperOpts(): Popper.PopperOptions {
-      const defaultOpts: Popper.PopperOptions = {
-        placement: <Popper.Placement>this.placement,
-        modifiers: <Popper.Modifiers>{
+      let opts: Popper.PopperOptions = {
+        placement: this.placement,
+        modifiers: {
           preventOverflow: {
             boundariesElement: this.boundary
           }
         }
       };
 
-      let opts = defaultOpts;
       if (this.arrowElement) {
-        opts = {
-          ...defaultOpts,
-          modifiers: {
-            ...defaultOpts.modifiers,
-            arrow: { element: this.arrowElement }
-          }
-        };
+        if (opts.modifiers) {
+          opts.modifiers.arrow = { element: this.arrowElement };
+        }
       }
+
       return opts;
     },
     setPopperContent(isHtml = true) {
@@ -376,11 +402,7 @@ export default mixins(Uid).extend({
         return;
       }
 
-      const classes = this.$el.className
-        .trim()
-        .split(/\s+/)
-        .filter(c => c !== "popper-content");
-
+      const classes = this.$el.className.trim().split(/\s+/);
       target.firstElementChild.className += ` ${classes}`;
     },
     attachEvent(
