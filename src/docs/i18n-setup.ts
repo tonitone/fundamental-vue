@@ -3,7 +3,7 @@ import VueI18n from 'vue-i18n';
 
 Vue.use(VueI18n);
 // tslint:disable-next-line:no-var-requires
-const text = require('./lang/en.properties');
+const text = require('./lang/text_en.properties');
 export const i18n = new VueI18n({
   locale: 'en', // set locale
   fallbackLocale: 'en',
@@ -25,7 +25,8 @@ export function loadLanguageAsync(lang: string) {
     if (!loadedLanguages.includes(lang)) {
       return new Promise((resolve) => {
         try {
-          const t = require('./lang/'+lang+'.properties');
+          // const t = require('./lang/'+lang+'.properties');
+          const t = require(`./lang/text_${lang}.properties`);
           i18n.setLocaleMessage(lang, {message: t});
           loadedLanguages.push(lang);
           setI18nLanguage(lang);
