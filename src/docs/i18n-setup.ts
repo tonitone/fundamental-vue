@@ -29,15 +29,16 @@ export function loadLanguageAsync(lang: string) {
   if (i18n.locale !== lang) {
     if (!loadedLanguages.includes(lang)) {
       return new Promise((resolve) => {
+        let t;
         try {
-          const t = require(`${baseUrl}/text_${lang}.properties`);
-          i18n.setLocaleMessage(lang, {message: t});
-          loadedLanguages.push(lang);
-          setI18nLanguage(lang);
-          resolve();
+          t = require(`${baseUrl}/text_${lang}.properties`);
         } catch(err) {
           resolve();
         }
+        i18n.setLocaleMessage(lang, {message: t});
+        loadedLanguages.push(lang);
+        setI18nLanguage(lang);
+        resolve();
       });
     }
     return Promise.resolve(setI18nLanguage(lang));
