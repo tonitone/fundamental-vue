@@ -7,7 +7,7 @@ import Router from 'vue-router';
 import { DocsRouter } from './DocsRouter';
 import { registerComponents } from './components';
 import App from './App.vue';
-import {i18n, loadLanguageAsync} from './i18n-setup';
+import {i18n, loadLanguageAsync, setBaseUrl} from './i18n-setup';
 
 // Register Layouts globally so that they are available by name
 import DefaultLayout from '@/docs/layouts/DefaultLayout.vue';
@@ -29,8 +29,13 @@ async function asnycLoad() {
     render: h => h(App),
     i18n,
   });
+  // set baseUrl for .properties
+  setBaseUrl('./lang.1');
+  // get locale from browser setting
   const locale = navigator.language;
   await loadLanguageAsync(locale);
+  // set to another locale
+  await loadLanguageAsync('zh-CN');
   vm.$mount('#app');
 }
 

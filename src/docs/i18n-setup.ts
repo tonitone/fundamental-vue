@@ -2,8 +2,10 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 
 Vue.use(VueI18n);
+// default baseUrl
+let baseUrl = './lang';
 // tslint:disable-next-line:no-var-requires
-const text = require('./lang/text_en.properties');
+const text = require(`${baseUrl}/text_en.properties`);
 export const i18n = new VueI18n({
   locale: 'en', // set locale
   fallbackLocale: 'en',
@@ -15,6 +17,9 @@ export const i18n = new VueI18n({
 });
 
 const loadedLanguages = ['en'];
+export function setBaseUrl(url: string) {
+  baseUrl = url;
+}
 
 function setI18nLanguage(lang: string) {
   i18n.locale = lang;
@@ -25,8 +30,7 @@ export function loadLanguageAsync(lang: string) {
     if (!loadedLanguages.includes(lang)) {
       return new Promise((resolve) => {
         try {
-          // const t = require('./lang/'+lang+'.properties');
-          const t = require(`./lang/text_${lang}.properties`);
+          const t = require(`${baseUrl}/text_${lang}.properties`);
           i18n.setLocaleMessage(lang, {message: t});
           loadedLanguages.push(lang);
           setI18nLanguage(lang);
