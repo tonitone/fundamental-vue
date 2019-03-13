@@ -3,18 +3,26 @@ import { shallowMount } from "@vue/test-utils";
 import Button from "../Button.vue";
 
 describe("Button", () => {
+  // There was a bug that causes <FdButton compact> to render <FdButton compact="compact">
+  it("renders compact correctly", () => {
+    const button = shallowMount(Button, { propsData: { compact: true } });
+    const classes = button.classes();
+    expect(classes).toContain("fd-button");
+    expect(classes).toContain("fd-button--compact");
+  });
+
   it("renders default slot when passed", () => {
     const title = "Button Title";
-    const wrapper = shallowMount(Button, {
+    const button = shallowMount(Button, {
       slots: {
         default: title
       }
     });
-    assert.include(wrapper.text(), title);
+    assert.include(button.text(), title);
   });
 
   it("does not emit a click event when disabled", () => {
-    const wrapper = shallowMount(Button, {
+    const button = shallowMount(Button, {
       propsData: {
         state: "disabled"
       },
@@ -22,18 +30,18 @@ describe("Button", () => {
         default: "hi"
       }
     });
-    wrapper.trigger("click");
-    assert.isEmpty(wrapper.emitted());
+    button.trigger("click");
+    assert.isEmpty(button.emitted());
   });
 
   it("does not emit a click event when clicked", () => {
-    const wrapper = shallowMount(Button, {
+    const button = shallowMount(Button, {
       slots: {
         default: "hi"
       }
     });
-    wrapper.trigger("click");
-    const clicks = wrapper.emitted("click");
+    button.trigger("click");
+    const clicks = button.emitted("click");
     assert.isArray(clicks);
     assert.lengthOf(clicks, 1);
   });

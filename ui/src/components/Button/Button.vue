@@ -6,14 +6,14 @@
 
 <script>
 import Vue from "vue";
-import { ButtonContainer } from "./ButtonContainer";
 import ButtonTypes from "./ButtonTypes";
-import { mixins, Icon, Compactable, Uid } from "@/mixins";
+import { mixins, Icon, Uid } from "@/mixins";
 
 export default {
   name: "FdButton",
-  mixins: [Icon, Uid, Compactable],
+  mixins: [Icon, Uid],
   props: {
+    compact: Boolean,
     styling: {
       type: String,
       default: null,
@@ -41,19 +41,12 @@ export default {
   },
   computed: {
     classes() {
-      const staticClass = [this.styling == null ? "fd-button" : ""];
-      const compact = [this.compact ? "fd-button--compact" : ""];
-      const styling = [this.styling ? `fd-button--${this.styling}` : ""];
-      const type = [this.type ? `fd-button--${this.type}` : ""];
-      const state = [this.state !== "normal" ? `is-${this.state}` : ""];
-
-      // @ts-ignore
       return [
-        ...staticClass,
-        ...compact,
-        ...styling,
-        ...type,
-        ...state,
+        this.styling ? "" : "fd-button",
+        this.compact ? "fd-button--compact" : "",
+        this.styling ? `fd-button--${this.styling}` : "",
+        this.type ? `fd-button--${this.type}` : "",
+        this.state !== "normal" ? `is-${this.state}` : "",
         ...this.iconClasses
       ];
     }
