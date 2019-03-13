@@ -45,7 +45,6 @@ Then you can use Fundamental Vue like this:
   <body>
     <div id="app" />
     <script>
-      Vue.use(FundamentalVue);
       new Vue({
         el: '#app',
         template: `
@@ -58,6 +57,8 @@ Then you can use Fundamental Vue like this:
     </script>
   </body>
 ```
+
+When using *Fundamental Vue* via a `<script>`-tag you don't have to install it manually by calling `Vue.use(FundamentalVue)`. This is done for you automatically. You can disable the automatic installation by setting `window.__FD_AUTO_INSTALL_DISABLED_KEY__` to true early on.
 
 If you are targeting IE 11 you have to include the IE-compatible build of Fiori Fundamentals:
 
@@ -123,7 +124,7 @@ To download and use this library, you first need to install the node package man
     ```
     // If you are targeting IE 11 uncomment the following line.
     // $fd-support-css-var-fallback: true;
-    
+
     $fd-icons-path : "../node_modules/fiori-fundamentals/scss/icons/"; // should be declared before the scss import
 
     $fd-scss-font-path : "../node_modules/fiori-fundamentals/scss/fonts/";
@@ -164,10 +165,10 @@ Merges to the `master` branch will be published as a prerelease. Prereleases wil
 Please see [Issues](https://github.com/SAP/fundamental-vue/issues).
 
 # Developer Guide
-Interested in contributing to this Fundamental Vue? See the [Developer Guide](https://github.com/SAP/fundamental-vue/wiki/Dev-Guide). 
+Interested in contributing to this Fundamental Vue? See the [Developer Guide](https://github.com/SAP/fundamental-vue/wiki/Dev-Guide).
 
 # Testing Guide
-See the [Testing Guide](https://github.com/SAP/fundamental-vue/wiki/Test-Guide). 
+See the [Testing Guide](https://github.com/SAP/fundamental-vue/wiki/Test-Guide).
 
 ## Support
 
